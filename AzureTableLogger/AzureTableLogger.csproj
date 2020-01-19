@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/adamosoftware/AzureTableLogger</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>azure-storage error-logging</PackageTags>
+    <PackageId>AO.AzureTableLogger</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
