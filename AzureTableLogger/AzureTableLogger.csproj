@@ -7,10 +7,21 @@
     <Company>Adam O'Neil</Company>
     <Product>AzureTableLogger</Product>
     <Description>A simple exception logger for Azure Table Storage</Description>
+    <RepositoryUrl>https://github.com/adamosoftware/AzureTableLogger</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/adamosoftware/AzureTableLogger</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageTags>azure-storage error-logging</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
