@@ -15,11 +15,16 @@ namespace Testing
                 .Build();
         }
 
-        [TestMethod]
-        public void SimpleLog()
+        private static TableStorageLogger GetLogger()
         {
             var config = GetConfig();
-            var logger = new TableStorageLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "Tests", "AzureTableLogger");
+            return new TableStorageLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "Tests", "AzureTableLogger");
+        }
+
+        [TestMethod]
+        public void SimpleLog()
+        {            
+            var logger = GetLogger();
 
             try
             {
@@ -34,8 +39,7 @@ namespace Testing
         [TestMethod]
         public void SimpleLogAndRetrieve()
         {
-            var config = GetConfig();
-            var logger = new TableStorageLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "Tests", "AzureTableLogger");
+            var logger = GetLogger();
 
             try
             {
