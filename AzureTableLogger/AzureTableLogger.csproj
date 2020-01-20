@@ -12,19 +12,20 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>azure-storage error-logging</PackageTags>
     <PackageId>AO.AzureTableLogger</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <PackageReleaseNotes>Added FullMessage property that recurses through nested exceptions</PackageReleaseNotes>
+    <Copyright>Copyright (c) Adam O'Neil 2020</Copyright>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.6" />
   </ItemGroup>
 
 </Project>

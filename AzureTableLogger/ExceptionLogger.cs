@@ -1,7 +1,5 @@
 ﻿using AzureTableLogger.Models;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
