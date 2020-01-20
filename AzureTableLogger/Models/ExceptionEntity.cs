@@ -13,9 +13,23 @@ namespace AzureTableLogger.Models
 
         public ExceptionEntity(string appName, Exception exception)
         {
+            string getFullMessage(Exception nested, int depth = 0)
+            {
+                string result = nested.Message;
+
+                if (nested.InnerException != null)
+                {
+                    depth++;
+                    result += "\r\n" + new string('-', depth) + " " + getFullMessage(nested.InnerException, depth);
+                }
+
+                return result;
+            }
+
             PartitionKey = appName;
             RowKey = Guid.NewGuid().ToString();
             Message = exception.Message;
+            FullMessage = getFullMessage(exception);
             StackTrace = exception.StackTrace;
             ExceptionType = exception.GetType().Name;
 
@@ -34,6 +48,7 @@ namespace AzureTableLogger.Models
         public string UserName { get; set; }
         public string MethodName { get; set; }
         public string Message { get; set; }
+        public string FullMessage { get; set; }
         public string StackTrace { get; set; }
         public string QueryString { get; set; }
         public string HttpMethod { get; set; }

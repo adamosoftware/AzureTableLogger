@@ -12,7 +12,8 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>azure-storage error-logging</PackageTags>
     <PackageId>AO.AzureTableLogger</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>Added FullMessage property that recurses through nested exceptions</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

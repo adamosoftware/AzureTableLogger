@@ -70,5 +70,35 @@ namespace Testing
                 Assert.IsTrue(lookup.MethodName.Equals("SimpleLogAndRetrieve"));
             }
         }
+
+        [TestMethod]
+        public void NestedMessage()
+        {
+            try
+            {
+                try
+                {
+                    try
+                    {
+                        throw new Exception("here is the innermost exception");
+                    }
+                    catch (Exception exc)
+                    {
+                        throw new Exception("this is the mid-level exception", exc);
+                    }
+                }
+                catch (Exception exc)
+                {
+                    throw new Exception("this is the outermost exception", exc);
+                }
+            }
+            catch (Exception outer)
+            {
+                var logger = GetLogger();
+                var log = logger.WriteAsync(outer).Result;
+                var lookup = logger.GetAsync(log.ExceptionId).Result;
+                Assert.IsTrue(lookup.FullMessage.Equals("this is the outermost exception\r\n- this is the mid-level exception\r\n-- here is the innermost exception"));
+            }
+        }
     }
 }
