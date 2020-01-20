@@ -18,8 +18,17 @@ namespace AzureTableLogger.Models
             Message = exception.Message;
             StackTrace = exception.StackTrace;
             ExceptionType = exception.GetType().Name;
+
+            if (exception.Data.Count > 0)
+            {
+                CustomData = new Dictionary<string, string>();
+                foreach (string key in exception.Data.Keys)
+                {
+                    CustomData.Add(key, exception.Data[key]?.ToString());
+                }
+            }
         }
-        
+
         public string ExceptionType { get; set; }
         public string MachineName { get; set; }
         public string UserName { get; set; }
@@ -28,9 +37,11 @@ namespace AzureTableLogger.Models
         public string StackTrace { get; set; }
         public string QueryString { get; set; }
         public string HttpMethod { get; set; }
-        public Dictionary<string, string> CustomData { get; set; }
+        public Dictionary<string, string> CustomData { get; set; }        
 
-        private const string customDataPrefix = "c_";
+        public string ExceptionId { get { return RowKey; } }
+
+        private const string customDataPrefix = "__";
 
         public override IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
         {

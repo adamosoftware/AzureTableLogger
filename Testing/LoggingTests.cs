@@ -16,10 +16,10 @@ namespace Testing
                 .Build();
         }
 
-        private static TableStorageLogger GetLogger()
+        private static ExceptionLogger GetLogger()
         {
             var config = GetConfig();
-            return new TableStorageLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "Tests", "AzureTableLogger");
+            return new ExceptionLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "AzureTableLogger", "Tests");
         }
 
         [TestMethod]

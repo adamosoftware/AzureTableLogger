@@ -3,18 +3,17 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace AzureTableLogger
 {
-    public class TableStorageLogger
+    public class ExceptionLogger
     {
         private readonly StorageCredentials _credentials;
         private readonly string _tableName;        
 
-        public TableStorageLogger(string accountName, string accountKey, string tableName, string appName)
+        public ExceptionLogger(string accountName, string accountKey, string appName, string tableName = "Exceptions")
         {
             _credentials = new StorageCredentials(accountName, accountKey);
             _tableName = tableName;
@@ -39,24 +38,15 @@ namespace AzureTableLogger
                 MethodName = methodName
             };
 
-            if (exception.Data.Count > 0)
-            {
-                log.CustomData = new Dictionary<string, string>();
-                foreach (string key in exception.Data.Keys)
-                {
-                    log.CustomData.Add(key, exception.Data[key]?.ToString());
-                }
-            }
-
             await WriteLogAsync(log);
 
             return log;
         }
 
-        public async Task<ExceptionEntity> GetAsync(string rowKey)
+        public async Task<ExceptionEntity> GetAsync(string exceptionId)
         {
             var table = await InitTableAsync();
-            var operation = TableOperation.Retrieve<ExceptionEntity>(AppName, rowKey);
+            var operation = TableOperation.Retrieve<ExceptionEntity>(AppName, exceptionId);
             var result = await table.ExecuteAsync(operation);
             return result.Result as ExceptionEntity;
         }

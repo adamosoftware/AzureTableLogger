@@ -18,7 +18,7 @@ namespace AzureTableLogger
 
         protected abstract TableStorageLogger CreateLogger(IConfiguration config);
 
-        protected abstract string GetRedirectUrl(string rowKey);
+        protected abstract string GetRedirectUrl(string exceptionId);
 
         protected virtual Dictionary<string, string> GetCustomData(ExceptionContext context)
         {
