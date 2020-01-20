@@ -11,7 +11,7 @@ namespace SampleApp.Filters
 
         protected override ExceptionLogger CreateLogger(IConfiguration config)
         {
-            return MyLogBuilder.Create(config);
+            return new MyExceptionLogger(config);
         }
 
         protected override string GetRedirectUrl(string exceptionId)

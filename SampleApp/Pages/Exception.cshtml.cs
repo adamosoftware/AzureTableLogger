@@ -16,7 +16,7 @@ namespace SampleApp.Pages
 
         public ExceptionModel(IConfiguration config)
         {
-            _logger = MyLogBuilder.Create(config);
+            _logger = new MyExceptionLogger(config);
         }
 
         public async Task OnGetAsync()
