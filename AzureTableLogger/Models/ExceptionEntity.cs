@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
+using System.Collections.Generic;
 
 namespace AzureTableLogger.Models
 {
@@ -24,5 +25,6 @@ namespace AzureTableLogger.Models
         public string StackTrace { get; set; }
         public string QueryString { get; set; }
         public string HttpMethod { get; set; }
+        public Dictionary<string, string> CustomData { get; set; }
     }
 }
