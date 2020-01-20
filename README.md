@@ -14,9 +14,9 @@ Note that I omitted my storage credentials from the repo. If you clone and run t
 
 ```json
 {
-	"StorageAccount" : {
-		"Name" : "<your account>",
-		"Key" : "<your key>"
-	}
+    "StorageAccount" : {
+        "Name" : "<your account>",
+        "Key" : "<your key>"
+    }
 }
 ```
