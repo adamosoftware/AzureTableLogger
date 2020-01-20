@@ -7,7 +7,7 @@ namespace AzureTableLogger.Netcore
 {
     public static class Extensions
     {
-        public async static Task<ExceptionEntity> WriteAsync(this TableStorageLogger logger, ExceptionContext context, Dictionary<string, string> customData = null)
+        public async static Task<ExceptionEntity> WriteAsync(this ExceptionLogger logger, ExceptionContext context, Dictionary<string, string> customData = null)
         {            
             var log = new ExceptionEntity(logger.AppName, context.Exception)
             {

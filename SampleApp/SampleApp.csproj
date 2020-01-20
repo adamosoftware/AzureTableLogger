@@ -5,11 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AzureTableLogger\AzureTableLogger.csproj" />
+    <Content Include="..\Testing\config.json" Link="config.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AzureTableLogger.Netcore\AzureTableLogger.Netcore.csproj" />
   </ItemGroup>
 
 

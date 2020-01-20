@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureTableLogger", "AzureTableLogger\AzureTableLogger.csproj", "{7947EB8A-70E5-4DA0-BA4E-F6EBA4384378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{F22500EB-62D2-433D-BEF6-17C52FA799B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{F22500EB-62D2-433D-BEF6-17C52FA799B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{F85098EE-7520-4F9B-90CB-6DE3B0201B3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "SampleApp\SampleApp.csproj", "{F85098EE-7520-4F9B-90CB-6DE3B0201B3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureTableLogger.Netcore", "AzureTableLogger.Netcore\AzureTableLogger.Netcore.csproj", "{63835022-B45A-49CF-83AF-FF52A0C20474}"
 EndProject

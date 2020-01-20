@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SampleApp.Filters;
 
 namespace SampleApp
 {
@@ -21,7 +22,7 @@ namespace SampleApp
             services.AddRazorPages();
             services.AddMvc((options) =>
             {
-                //options.Filters.Add<ExceptionFilter>();
+                options.Filters.Add<MyExceptionFilter>();
             });
         }
 

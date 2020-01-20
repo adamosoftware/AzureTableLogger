@@ -9,14 +9,14 @@ namespace AzureTableLogger
 {
     public abstract class ExceptionFilterBase : IAsyncExceptionFilter
     {
-        private readonly TableStorageLogger _logger;
+        private readonly ExceptionLogger _logger;
 
         public ExceptionFilterBase(IConfiguration config)
         {
             _logger = CreateLogger(config);
         }
 
-        protected abstract TableStorageLogger CreateLogger(IConfiguration config);
+        protected abstract ExceptionLogger CreateLogger(IConfiguration config);
 
         protected abstract string GetRedirectUrl(string exceptionId);
 
