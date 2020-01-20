@@ -2,3 +2,9 @@
 @model SampleApp.Pages.ExceptionModel
 @{
 }
+
+<div class="alert alert-danger">
+    @Model.ErrorMessage
+</div>
+
+<p>Exception Id for tracking purposes: <strong>@Model.Id</strong></p>
