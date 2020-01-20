@@ -1,9 +1,9 @@
 ﻿using AzureTableLogger.Models;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -38,6 +38,15 @@ namespace AzureTableLogger
                 UserName = userName,
                 MethodName = methodName
             };
+
+            if (exception.Data.Count > 0)
+            {
+                log.CustomData = new Dictionary<string, string>();
+                foreach (string key in exception.Data.Keys)
+                {
+                    log.CustomData.Add(key, exception.Data[key]?.ToString());
+                }
+            }
 
             await WriteLogAsync(log);
 

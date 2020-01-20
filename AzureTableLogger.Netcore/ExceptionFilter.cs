@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AzureTableLogger.Netcore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AzureTableLogger
@@ -19,10 +20,16 @@ namespace AzureTableLogger
 
         protected abstract string GetRedirectUrl(string rowKey);
 
+        protected virtual Dictionary<string, string> GetCustomData(ExceptionContext context)
+        {
+            return null;
+        }
+
         public async Task OnExceptionAsync(ExceptionContext context)
         {
-            var result = await _logger.WriteAsync(context);
-            context.Result = new RedirectResult(GetRedirectUrl(result.RowKey));
+            var customData = GetCustomData(context);
+            var result = await _logger.WriteAsync(context, customData);
+            context.Result = new RedirectResult(GetRedirectUrl(result.RowKey));            
         }
     }
 }

@@ -8,6 +8,10 @@
     <ProjectReference Include="..\AzureTableLogger\AzureTableLogger.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 
 
 </Project>

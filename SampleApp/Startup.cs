@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SampleApp.Filters;
 
 namespace SampleApp
 {
@@ -27,7 +21,7 @@ namespace SampleApp
             services.AddRazorPages();
             services.AddMvc((options) =>
             {
-                options.Filters.Add<ExceptionFilter>();
+                //options.Filters.Add<ExceptionFilter>();
             });
         }
 

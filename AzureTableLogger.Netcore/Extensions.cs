@@ -1,28 +1,26 @@
 ﻿using AzureTableLogger.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureTableLogger.AspNetCore
+namespace AzureTableLogger.Netcore
 {
     public static class Extensions
     {
-        public async static Task<ExceptionEntity> WriteAsync(this TableStorageLogger logger, ExceptionContext context)
-        {
+        public async static Task<ExceptionEntity> WriteAsync(this TableStorageLogger logger, ExceptionContext context, Dictionary<string, string> customData = null)
+        {            
             var log = new ExceptionEntity(logger.AppName, context.Exception)
             {
                 UserName = context.HttpContext.User.Identity.Name,
                 MethodName = context.HttpContext.Request.Path.Value,
                 QueryString = context.HttpContext.Request.QueryString.Value,
-                HttpMethod = context.HttpContext.Request.Method
+                HttpMethod = context.HttpContext.Request.Method,
+                CustomData = customData
             };
 
-            await logger.AddLogAsync(log);
+            await logger.WriteLogAsync(log);
 
             return log;
         }
-
     }
 }

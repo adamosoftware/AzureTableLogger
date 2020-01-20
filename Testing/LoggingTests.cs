@@ -2,6 +2,7 @@ using AzureTableLogger;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Testing.Exceptions;
 
 namespace Testing
 {
@@ -33,6 +34,23 @@ namespace Testing
             catch (Exception exc)
             {
                 logger.WriteAsync(exc).Wait();
+            }
+        }
+
+        [TestMethod]
+        public void SimpleLogWithData()
+        {
+            var logger = GetLogger();
+
+            try
+            {
+                throw new CustomException("this is a custom exception", 234);
+            }
+            catch (CustomException exc)
+            {
+                var entry = logger.WriteAsync(exc).Result;
+                var log = logger.GetAsync(entry.RowKey).Result;
+                Assert.IsTrue(log.CustomData["libraryId"].Equals("234"));
             }
         }
 
