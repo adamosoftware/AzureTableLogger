@@ -1,6 +1,9 @@
-﻿using AzureTableLogger.Models;
+﻿using AzureTableLogger.Extensions;
+using AzureTableLogger.Models;
 using Microsoft.Azure.Cosmos.Table;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -47,6 +50,26 @@ namespace AzureTableLogger
             var operation = TableOperation.Retrieve<ExceptionEntity>(AppName, exceptionId);
             var result = await table.ExecuteAsync(operation);
             return result.Result as ExceptionEntity;
+        }
+
+        /// <summary>
+        /// returns the 50 most recent exceptions that meet the search criteria
+        /// </summary>
+        public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null)
+        {                       
+            var table = await InitTableAsync();
+            var query = table.CreateQuery<ExceptionEntity>();
+            query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);            
+
+            var results = (await query.ExecuteAsync(filter, 50)).OrderByDescending(item => item.Timestamp);
+            return results;
+        }
+
+        public async Task PurgeAfterAsync(TimeSpan timeSpan)
+        {
+            var table = await InitTableAsync();
+
+            throw new NotImplementedException();
         }
 
         private async Task<CloudTable> InitTableAsync()

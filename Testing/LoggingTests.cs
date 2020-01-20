@@ -2,6 +2,7 @@ using AzureTableLogger;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using Testing.Exceptions;
 
 namespace Testing
@@ -99,6 +100,14 @@ namespace Testing
                 var lookup = logger.GetAsync(log.ExceptionId).Result;
                 Assert.IsTrue(lookup.FullMessage.Equals("this is the outermost exception\r\n- this is the mid-level exception\r\n-- here is the innermost exception"));
             }
+        }
+
+        [TestMethod]
+        public void Query()
+        {
+            var logger = GetLogger();
+            var results = logger.QueryAsync().Result;
+            Assert.IsTrue(results.Any());
         }
     }
 }
