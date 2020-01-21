@@ -53,23 +53,40 @@ namespace AzureTableLogger
         }
 
         /// <summary>
-        /// returns the 50 most recent exceptions that meet the search criteria
+        /// returns the 100 most recent exceptions that meet the search criteria
         /// </summary>
-        public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null)
+        public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null, int maxResults = 100)
         {                       
             var table = await InitTableAsync();
             var query = table.CreateQuery<ExceptionEntity>();
             query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);            
 
-            var results = (await query.ExecuteAsync(filter, 50)).OrderByDescending(item => item.Timestamp);
+            var results = (await query.ExecuteAsync(filter, maxResults)).OrderByDescending(item => item.Timestamp);
             return results;
         }
 
         public async Task PurgeAfterAsync(TimeSpan timeSpan)
         {
             var table = await InitTableAsync();
+            var query = table.CreateQuery<ExceptionEntity>();
+            query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);
 
-            throw new NotImplementedException();
+            var results = await query.ExecuteAsync();
+
+            var delete = new TableBatchOperation();            
+            foreach (var entity in results)
+            {
+                var age = DateTime.UtcNow.Subtract(entity.Timestamp.UtcDateTime);
+                if (age > timeSpan)
+                {
+                    delete.Add(TableOperation.Delete(entity));
+                }
+            }
+
+            if (delete.Any())
+            {
+                await table.ExecuteBatchAsync(delete);
+            }            
         }
 
         private async Task<CloudTable> InitTableAsync()

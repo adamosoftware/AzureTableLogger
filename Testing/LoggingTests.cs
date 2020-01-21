@@ -109,5 +109,15 @@ namespace Testing
             var results = logger.QueryAsync().Result;
             Assert.IsTrue(results.Any());
         }
+
+        [TestMethod]
+        public void Purge()
+        {
+            var logger = GetLogger();
+            logger.PurgeAfterAsync(TimeSpan.FromHours(3)).Wait();
+
+            var results = logger.QueryAsync().Result;
+            Assert.IsTrue(results.All(ent => DateTime.UtcNow.Subtract(ent.Timestamp.UtcDateTime) < TimeSpan.FromDays(3)));
+        }
     }
 }
