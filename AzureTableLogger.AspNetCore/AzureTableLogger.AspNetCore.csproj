@@ -3,16 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>AO.AzureTableLogger.Netcore</PackageId>
+    <PackageId>AO.AzureTableLogger.AspNetCore</PackageId>
     <Authors>Adam O'Neil</Authors>
-    <Product>AO.AzureTableLogger.Netcore</Product>
-    <Description>A global exception filter for .NET Core apps</Description>
+    <Product>AO.AzureTableLogger.AspNetCore</Product>
+    <Description>A global exception filter and logging service for .NET Core apps</Description>
     <Copyright>Copyright (c) Adam O'Neil 2020</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/adamosoftware/AzureTableLogger</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/AzureTableLogger</RepositoryUrl>
     <PackageTags>exception-handling error-handling netcore</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageReleaseNotes>updated to Cosmos</PackageReleaseNotes>
   </PropertyGroup>
 
