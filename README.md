@@ -8,7 +8,7 @@ There are two Nuget packages in this repo:
 
 - **AO.AzureTableLogger** provides Exception logging at the lowest level. This package has no dependencies apart from Azure Storage itself. Have a look at the tests to see this in action: [simplest case](https://github.com/adamosoftware/AzureTableLogger/blob/master/Testing/LoggingTests.cs#L26), with [custom data](https://github.com/adamosoftware/AzureTableLogger/blob/master/Testing/LoggingTests.cs#L41), [log and retrieve](https://github.com/adamosoftware/AzureTableLogger/blob/master/Testing/LoggingTests.cs#L58), and [nested messages](https://github.com/adamosoftware/AzureTableLogger/blob/master/Testing/LoggingTests.cs#L75)
 
-- **AO.AzureTableLogger.Netcore** is intended for .NET Core apps and is specifically meant for creating your own global exception filter. Please see my [walkthrough](https://github.com/adamosoftware/AzureTableLogger/wiki/SampleApp-walkthrough) on how to implement.
+- **AO.AzureTableLogger.AspNetCore** is intended for .NET Core 3 apps, and is specifically meant for creating your own global exception filter. Please see my [walkthrough](https://github.com/adamosoftware/AzureTableLogger/wiki/SampleApp-walkthrough) on how to implement.
 
 Note that I omitted my storage credentials from the repo. If you clone and run this yourself, create a file called `config.json` both in the SampleApp and Testing projects that looks like this:
 
