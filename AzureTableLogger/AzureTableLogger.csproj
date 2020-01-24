@@ -12,8 +12,8 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>azure-storage error-logging</PackageTags>
     <PackageId>AO.AzureTableLogger</PackageId>
-    <Version>1.0.6</Version>
-    <PackageReleaseNotes>added PurgeAfterAsync and QueryAsync methods</PackageReleaseNotes>
+    <Version>1.0.7</Version>
+    <PackageReleaseNotes>fixed issues with QueryAsync</PackageReleaseNotes>
     <Copyright>Copyright (c) Adam O'Neil 2020</Copyright>
   </PropertyGroup>
 

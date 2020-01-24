@@ -1,5 +1,4 @@
-﻿using AzureTableLogger.Extensions;
-using AzureTableLogger.Models;
+﻿using AzureTableLogger.Models;
 using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
@@ -58,36 +57,49 @@ namespace AzureTableLogger
         public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null, int maxResults = 100)
         {                       
             var table = await InitTableAsync();
-            var query = table.CreateQuery<ExceptionEntity>();
-            query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);            
+            var query = GetQuery().OrderByDesc(nameof(ExceptionEntity.Timestamp));
 
-            var results = (await query.ExecuteAsync(filter)).OrderByDescending(item => item.Timestamp);
+            // always get just the first segment
+            var allResults = (await table.ExecuteQuerySegmentedAsync(query, null)).Results;
 
-            return results.Take(maxResults);
+            var returnResults = (filter != null) ? allResults.Where(filter) : allResults;
+
+            return returnResults.Take(maxResults);
+        }
+
+        private TableQuery<ExceptionEntity> GetQuery()
+        {
+            return new TableQuery<ExceptionEntity>()
+                .Where(TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName));
         }
 
         public async Task PurgeAfterAsync(TimeSpan timeSpan)
         {
             var table = await InitTableAsync();
-            var query = table.CreateQuery<ExceptionEntity>();
-            query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);
+            var query = GetQuery().OrderBy(nameof(ExceptionEntity.Timestamp));
 
-            var results = await query.ExecuteAsync();
-
-            var delete = new TableBatchOperation();            
-            foreach (var entity in results)
+            var continuation = default(TableContinuationToken);
+            do
             {
-                var age = DateTime.UtcNow.Subtract(entity.Timestamp.UtcDateTime);
-                if (age > timeSpan)
+                var segment = await table.ExecuteQuerySegmentedAsync(query, continuation);
+
+                var delete = new TableBatchOperation();
+                foreach (var entity in segment.Results)
                 {
-                    delete.Add(TableOperation.Delete(entity));
+                    var age = DateTime.UtcNow.Subtract(entity.Timestamp.UtcDateTime);
+                    if (age > timeSpan)
+                    {
+                        delete.Add(TableOperation.Delete(entity));
+                    }
                 }
-            }
 
-            if (delete.Any())
-            {
-                await table.ExecuteBatchAsync(delete);
-            }            
+                if (delete.Any())
+                {
+                    await table.ExecuteBatchAsync(delete);
+                }
+
+                continuation = segment.ContinuationToken;
+            } while (continuation != null);                        
         }
 
         private async Task<CloudTable> InitTableAsync()

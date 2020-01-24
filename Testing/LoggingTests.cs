@@ -17,10 +17,10 @@ namespace Testing
                 .Build();
         }
 
-        private static ExceptionLogger GetLogger()
+        private static ExceptionLogger GetLogger(string appName = "AzureTableLogger", string tableName = "Tests")
         {
             var config = GetConfig();
-            return new ExceptionLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], "AzureTableLogger", "Tests");
+            return new ExceptionLogger(config["StorageAccount:Name"], config["StorageAccount:Key"], appName, tableName);
         }
 
         [TestMethod]
@@ -107,7 +107,18 @@ namespace Testing
         {
             var logger = GetLogger();
             var results = logger.QueryAsync().Result;
-            Assert.IsTrue(results.Any());
+            Assert.IsTrue(results.All(ent => ent.PartitionKey.Equals(logger.AppName)));
+        }
+
+        [TestMethod]
+        public void QuerySqlChartify()
+        {
+            // dealing with symptoms from this issue https://github.com/Azure/azure-storage-net/issues/77
+
+            var logger = GetLogger("SqlChartify", "Exceptions");
+            var results = logger.QueryAsync().Result;
+            Assert.IsTrue(results.All(ent => ent.PartitionKey.Equals(logger.AppName)));
+
         }
 
         [TestMethod]
