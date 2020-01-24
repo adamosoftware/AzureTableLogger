@@ -29,13 +29,17 @@ namespace AzureTableLogger
             await table.ExecuteAsync(operation);
         }
 
-        public async Task<ExceptionEntity> WriteAsync(Exception exception, string machineName = null, string userName = null, [CallerMemberName]string methodName = null)
+        public async Task<ExceptionEntity> WriteAsync(
+            Exception exception, string machineName = null, string userName = null, 
+            [CallerMemberName]string methodName = null, [CallerFilePath]string sourceFile = null, [CallerLineNumber]int lineNumber = 0)
         {
             var log = new ExceptionEntity(AppName, exception)
             {
                 MachineName = machineName,
                 UserName = userName,
-                MethodName = methodName
+                MethodName = methodName,
+                SourceFile = sourceFile,
+                LineNumber = lineNumber
             };
 
             await WriteLogAsync(log);
