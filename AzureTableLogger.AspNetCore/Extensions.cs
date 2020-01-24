@@ -16,10 +16,14 @@ namespace AzureTableLogger.Netcore
                 MethodName = context.HttpContext.Request.Path.Value,
                 QueryString = context.HttpContext.Request.QueryString.Value,
                 HttpMethod = context.HttpContext.Request.Method,
-                Cookies = GetCookies(context.HttpContext.Request.Cookies),
-                FormValues = GetFormValues(context.HttpContext.Request.Form),
+                Cookies = GetCookies(context.HttpContext.Request.Cookies),                
                 CustomData = customData
             };
+
+            if (context.HttpContext.Request.Method.ToLower().Equals("post"))
+            {
+                log.FormValues = GetFormValues(context.HttpContext.Request.Form);
+            }
 
             await logger.WriteLogAsync(log);
 
@@ -29,7 +33,13 @@ namespace AzureTableLogger.Netcore
         private static Dictionary<string, string> GetFormValues(IFormCollection form)
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (var field in form.Keys) result.Add(field, form[field].ToString());
+            foreach (var field in form.Keys)
+            {
+                if (!field.ToLower().Contains("requestverificationtoken"))
+                {
+                    result.Add(field, form[field].ToString());
+                }                
+            }
             return result;
         }
 
