@@ -53,7 +53,7 @@ namespace AzureTableLogger
         }
 
         /// <summary>
-        /// returns the 100 most recent exceptions that meet the search criteria
+        /// returns by default the 100 most recent exceptions that meet the search criteria
         /// </summary>
         public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null, int maxResults = 100)
         {                       
@@ -61,8 +61,9 @@ namespace AzureTableLogger
             var query = table.CreateQuery<ExceptionEntity>();
             query.FilterString = TableQuery.GenerateFilterCondition(nameof(ExceptionEntity.PartitionKey), QueryComparisons.Equal, AppName);            
 
-            var results = (await query.ExecuteAsync(filter, maxResults)).OrderByDescending(item => item.Timestamp);
-            return results;
+            var results = (await query.ExecuteAsync(filter)).OrderByDescending(item => item.Timestamp);
+
+            return results.Take(maxResults);
         }
 
         public async Task PurgeAfterAsync(TimeSpan timeSpan)

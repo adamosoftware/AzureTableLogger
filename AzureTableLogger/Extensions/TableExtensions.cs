@@ -13,7 +13,7 @@ namespace AzureTableLogger.Extensions
         /// Thanks to https://www.vivien-chevallier.com/Articles/executing-an-async-query-with-azure-table-storage-and-retrieve-all-the-results-in-a-single-operation
         /// but I removed the cancellation token arg
         /// </summary>
-        public async static Task<IEnumerable<TElement>> ExecuteAsync<TElement>(this TableQuery<TElement> tableQuery, Func<TElement, bool> filter = null, int maxResults = -1)
+        public async static Task<IEnumerable<TElement>> ExecuteAsync<TElement>(this TableQuery<TElement> tableQuery, Func<TElement, bool> filter = null)
         {
             var nextQuery = tableQuery;
             var continuationToken = default(TableContinuationToken);
@@ -24,11 +24,6 @@ namespace AzureTableLogger.Extensions
                 var segmentResults = await nextQuery.ExecuteSegmentedAsync(continuationToken);
                 var filtered = (filter != null) ? segmentResults.Results.Where(filter) : segmentResults.Results;
                 
-                if (maxResults > -1)
-                {
-                    filtered = filtered.Take(maxResults);
-                }
-
                 results.Capacity += filtered.Count();                
                 results.AddRange(filtered);
                 continuationToken = segmentResults.ContinuationToken;
