@@ -111,6 +111,14 @@ namespace Testing
         }
 
         [TestMethod]
+        public void QueryWhere()
+        {
+            var logger = GetLogger();
+            var results = logger.QueryAsync("this exception").Result;
+            Assert.IsTrue(results.Any());
+        }
+
+        [TestMethod]
         public void QuerySqlChartify()
         {
             // dealing with symptoms from this issue https://github.com/Azure/azure-storage-net/issues/77

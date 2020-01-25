@@ -78,12 +78,35 @@ namespace AzureTableLogger
             var table = await InitTableAsync();
             var query = GetQuery().OrderByDesc(nameof(ExceptionEntity.Timestamp));
 
-            // always get just the first segment
-            var allResults = (await table.ExecuteQuerySegmentedAsync(query, null)).Results;
+            List<ExceptionEntity> results = new List<ExceptionEntity>();
 
-            var returnResults = (filter != null) ? allResults.Where(filter) : allResults;
+            var token = default(TableContinuationToken);
+            do
+            {
+                var segment = await table.ExecuteQuerySegmentedAsync(query, token);
+                var returnResults = (filter != null) ? segment.Results.Where(filter) : segment.Results;
+                results.AddRange(returnResults);
+                token = segment.ContinuationToken;
+            } while (token != null && results.Count < maxResults);
+                       
+            return results.Take(maxResults);
+        }
 
-            return returnResults.Take(maxResults);
+        public async Task<IEnumerable<ExceptionEntity>> QueryAsync(string query, int maxResults = 100)
+        {
+            string[] words = query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+
+            Func<ExceptionEntity, bool> filter = (ent) =>
+            {
+                string searchText = string.Join("\r\n", new string[]
+                {
+                    ent.FullMessage, ent.UserName, ent.MethodName, ent.ExceptionType
+                });
+
+                return words.All(word => searchText.Contains(word));
+            };
+
+            return await QueryAsync(filter, maxResults);
         }
 
         private TableQuery<ExceptionEntity> GetQuery()
