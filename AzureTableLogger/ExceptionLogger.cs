@@ -47,6 +47,21 @@ namespace AzureTableLogger
             return log;
         }
 
+        public async Task TryCatchAsync(Func<Task> action, Action<Exception> displayError,
+            string machineName = null, string userName = null,
+            [CallerMemberName]string methodName = null, [CallerFilePath]string sourceFile = null, [CallerLineNumber]int lineNumber = 0)
+        {
+            try
+            {
+                await action.Invoke();
+            }
+            catch (Exception exc)
+            {
+                await WriteAsync(exc, machineName, userName, methodName, sourceFile, lineNumber);
+                displayError.Invoke(exc);
+            }
+        }
+
         public async Task<ExceptionEntity> GetAsync(string exceptionId)
         {
             var table = await InitTableAsync();

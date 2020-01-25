@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/adamosoftware/AzureTableLogger</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/AzureTableLogger</RepositoryUrl>
     <PackageTags>exception-handling error-handling netcore</PackageTags>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <PackageReleaseNotes>now capturing cookies and form values</PackageReleaseNotes>
   </PropertyGroup>
 

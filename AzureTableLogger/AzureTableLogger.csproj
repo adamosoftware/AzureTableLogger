@@ -12,7 +12,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>azure-storage error-logging</PackageTags>
     <PackageId>AO.AzureTableLogger</PackageId>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <PackageReleaseNotes>fixed issues with QueryAsync</PackageReleaseNotes>
     <Copyright>Copyright (c) Adam O'Neil 2020</Copyright>
   </PropertyGroup>

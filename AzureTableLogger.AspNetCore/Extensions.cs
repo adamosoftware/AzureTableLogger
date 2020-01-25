@@ -1,28 +1,33 @@
 ﻿using AzureTableLogger.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace AzureTableLogger.Netcore
+namespace AzureTableLogger.AspNetCore
 {
     public static class Extensions
     {
-        public async static Task<ExceptionEntity> WriteAsync(this ExceptionLogger logger, ExceptionContext context, Dictionary<string, string> customData = null)
+        public async static Task<ExceptionEntity> WriteAsync(this ExceptionLogger logger, 
+            Exception exception, HttpContext httpContext, Dictionary<string, string> customData = null,            
+            [CallerFilePath]string sourceFile = null, [CallerLineNumber]int lineNumber = 0)
         {            
-            var log = new ExceptionEntity(logger.AppName, context.Exception)
+            var log = new ExceptionEntity(logger.AppName, exception)
             {
-                UserName = context.HttpContext.User.Identity.Name,
-                MethodName = context.HttpContext.Request.Path.Value,
-                QueryString = context.HttpContext.Request.QueryString.Value,
-                HttpMethod = context.HttpContext.Request.Method,
-                Cookies = GetCookies(context.HttpContext.Request.Cookies),                
-                CustomData = customData
+                UserName = httpContext.User.Identity.Name,
+                MethodName = httpContext.Request.Path.Value,
+                QueryString = httpContext.Request.QueryString.Value,
+                HttpMethod = httpContext.Request.Method,
+                Cookies = GetCookies(httpContext.Request.Cookies),                
+                CustomData = customData,
+                SourceFile = sourceFile,
+                LineNumber = lineNumber
             };
 
-            if (context.HttpContext.Request.Method.ToLower().Equals("post"))
+            if (httpContext.Request.Method.ToLower().Equals("post"))
             {
-                log.FormValues = GetFormValues(context.HttpContext.Request.Form);
+                log.FormValues = GetFormValues(httpContext.Request.Form);
             }
 
             await logger.WriteLogAsync(log);
