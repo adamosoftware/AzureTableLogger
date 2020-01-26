@@ -94,6 +94,11 @@ namespace AzureTableLogger
 
         public async Task<IEnumerable<ExceptionEntity>> QueryAsync(string query, int maxResults = 100)
         {
+            if (string.IsNullOrEmpty(query))
+            {
+                return await QueryAsync(maxResults: maxResults);
+            }
+
             string[] words = query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
 
             Func<ExceptionEntity, bool> filter = (ent) =>
