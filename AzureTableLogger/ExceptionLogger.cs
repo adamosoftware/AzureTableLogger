@@ -87,7 +87,7 @@ namespace AzureTableLogger
                 var returnResults = (filter != null) ? segment.Results.Where(filter) : segment.Results;
                 results.AddRange(returnResults);
                 token = segment.ContinuationToken;
-            } while (token != null && results.Count < maxResults);
+            } while (token != null && results.Count <= maxResults);
                        
             return results.Take(maxResults);
         }
