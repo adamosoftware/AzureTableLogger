@@ -99,14 +99,14 @@ namespace AzureTableLogger
                 return await QueryAsync(maxResults: maxResults);
             }
 
-            string[] words = query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToArray();
+            string[] words = query.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim().ToLower()).ToArray();
 
             Func<ExceptionEntity, bool> filter = (ent) =>
             {
                 string searchText = string.Join("\r\n", new string[]
                 {
                     ent.FullMessage, ent.UserName, ent.MethodName, ent.ExceptionType
-                });
+                }).ToLower();
 
                 return words.All(word => searchText.Contains(word));
             };
