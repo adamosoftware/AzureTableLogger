@@ -105,7 +105,7 @@ namespace AzureTableLogger
             {
                 string searchText = string.Join("\r\n", new string[]
                 {
-                    ent.FullMessage, ent.UserName, ent.MethodName, ent.ExceptionType
+                    ent.FullMessage, ent.UserName, ent.MethodName, ent.ExceptionType, ent.RowKey
                 }).ToLower();
 
                 return words.All(word => searchText.Contains(word));
