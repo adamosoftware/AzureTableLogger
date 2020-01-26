@@ -151,11 +151,16 @@ namespace AzureTableLogger
 
         private async Task<CloudTable> InitTableAsync()
         {
-            var account = new CloudStorageAccount(_credentials, true);
+            var account = GetStorageAccount();
             var client = account.CreateCloudTableClient();
             var table = client.GetTableReference(_tableName);
             await table.CreateIfNotExistsAsync();
             return table;
+        }
+
+        public CloudStorageAccount GetStorageAccount()
+        {
+            return new CloudStorageAccount(_credentials, true);
         }
     }
 }
