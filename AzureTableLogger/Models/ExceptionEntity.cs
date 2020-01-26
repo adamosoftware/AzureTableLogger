@@ -30,7 +30,7 @@ namespace AzureTableLogger.Models
             Message = exception.Message;
             FullMessage = getFullMessage(exception);
             StackTrace = exception.StackTrace;
-            ExceptionType = exception.GetType().Name;            
+            ExceptionType = exception.GetType().Name;
 
             if (exception.Data.Count > 0)
             {

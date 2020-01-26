@@ -1,5 +1,4 @@
-﻿using AzureTableLogger.Models;
-using AzureTableLogger.AspNetCore;
+﻿using AzureTableLogger.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

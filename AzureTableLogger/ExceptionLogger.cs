@@ -11,7 +11,7 @@ namespace AzureTableLogger
     public class ExceptionLogger
     {
         private readonly StorageCredentials _credentials;
-        private readonly string _tableName;        
+        private readonly string _tableName;
 
         public ExceptionLogger(string accountName, string accountKey, string appName, string tableName = "Exceptions")
         {
@@ -30,7 +30,7 @@ namespace AzureTableLogger
         }
 
         public async Task<ExceptionEntity> WriteAsync(
-            Exception exception, string machineName = null, string userName = null, 
+            Exception exception, string machineName = null, string userName = null,
             [CallerMemberName]string methodName = null, [CallerFilePath]string sourceFile = null, [CallerLineNumber]int lineNumber = 0)
         {
             var log = new ExceptionEntity(AppName, exception)
@@ -74,7 +74,7 @@ namespace AzureTableLogger
         /// returns by default the 100 most recent exceptions that meet the search criteria
         /// </summary>
         public async Task<IEnumerable<ExceptionEntity>> QueryAsync(Func<ExceptionEntity, bool> filter = null, int maxResults = 100)
-        {                       
+        {
             var table = await InitTableAsync();
             var query = GetQuery().OrderByDesc(nameof(ExceptionEntity.Timestamp));
 
@@ -88,7 +88,7 @@ namespace AzureTableLogger
                 results.AddRange(returnResults);
                 token = segment.ContinuationToken;
             } while (token != null && results.Count <= maxResults);
-                       
+
             return results.Take(maxResults);
         }
 
@@ -146,7 +146,7 @@ namespace AzureTableLogger
                 }
 
                 continuation = segment.ContinuationToken;
-            } while (continuation != null);                        
+            } while (continuation != null);
         }
 
         private async Task<CloudTable> InitTableAsync()
