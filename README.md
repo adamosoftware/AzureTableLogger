@@ -25,6 +25,11 @@ Note that I omitted my storage credentials from the repo. If you clone and run t
 
 I also offer a Razor Class Library Nuget package **AO.AzureTableLogger.ExceptionDashboard**. Use this to view exceptions logged by AO.AzureTableLogger, both as a flat, searchable list, as well as grouped by frequency as "top issues." It's free to use offline, and fully functional. To use online (somewhere besides "localhost"), please [purchase a license key](https://paypal.me/adamosoftware?locale.x=en_US) for $150 USD. This is a great way to get visiblity into unhandled exceptions in your app without recurring cost,  database traffic, nor any code assets to own.
 
-To implement in your app, install Nuget package **AO.AzureTableLogger.ExceptionDashboard**, then implement **AO.AzureTableLogger.AspNetCore** using this [walkthrough](https://github.com/adamosoftware/AzureTableLogger/wiki/SampleApp-walkthrough). Then in your application, navigate to `/ExceptionLog/TopIssues` or `/ExceptionLog/List`.
+To implement in your app:
+
+1. Install Nuget package **AO.AzureTableLogger.ExceptionDashboard**
+2. Implement **AO.AzureTableLogger.AspNetCore** using this [walkthrough](https://github.com/adamosoftware/AzureTableLogger/wiki/SampleApp-walkthrough).
+3. Run your application, and navigate to `/ExceptionLog/TopIssues` or `/ExceptionLog/List`. When running on localhost, you'll see the Exception Dashboard pages.
+4. To enable the dashboard to work online, purchase a license key, then add it to your app's startup services, following this guide.
 
 ![img](dashboard.gif)
