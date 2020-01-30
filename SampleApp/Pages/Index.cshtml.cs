@@ -18,5 +18,10 @@ namespace SampleApp.Pages
         {
             throw new Exception("This is an unhandled exception that should be logged.");
         }
+
+        public IActionResult OnPostFormError()
+        {
+            throw new Exception("This is an error from a form which should have form values saved.");
+        }
     }
 }

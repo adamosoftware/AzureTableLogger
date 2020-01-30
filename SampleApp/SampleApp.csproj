@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AzureTableLogger.Netcore\AzureTableLogger.Netcore.csproj" />
+    <ProjectReference Include="..\AzureTableLogger.AspNetCore\AzureTableLogger.AspNetCore.csproj" />
   </ItemGroup>
 
 
