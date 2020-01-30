@@ -30,6 +30,6 @@ To implement in your app:
 1. Install Nuget package **AO.AzureTableLogger.ExceptionDashboard**
 2. Implement **AO.AzureTableLogger.AspNetCore** using this [walkthrough](https://github.com/adamosoftware/AzureTableLogger/wiki/SampleApp-walkthrough).
 3. Run your application, and navigate to `/ExceptionLog/TopIssues` or `/ExceptionLog/List`. When running on localhost, you'll see the Exception Dashboard pages.
-4. To enable the dashboard to work online, purchase a license key, then add it to your app's startup services, following this guide.
+4. To enable the dashboard to work online, purchase a license key, then add it to your app's startup services, following [this guide](https://github.com/adamosoftware/AzureTableLogger/wiki/Register-Exception-Dashboard).
 
 ![img](dashboard.gif)
