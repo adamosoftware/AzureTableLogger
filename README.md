@@ -23,4 +23,4 @@ Note that I omitted my storage credentials from the repo. If you clone and run t
 
 ## Exception Dashboard Razor Class Library
 
-I also offer a Razor Class Library Nuget package **AO.AzureTableLogger.ExceptionDashboard**. Use this to view exceptions logged by AO.AzureTableLogger. It's free forever for offline use, fully functional offline. To use online (somewhere besides "localhost"), please [purchase a license key](https://paypal.me/adamosoftware?locale.x=en_US) for $150 USD.
+I also offer a Razor Class Library Nuget package **AO.AzureTableLogger.ExceptionDashboard**. Use this to view exceptions logged by AO.AzureTableLogger. It's free to use offline, and fully functional. To use online (somewhere besides "localhost"), please [purchase a license key](https://paypal.me/adamosoftware?locale.x=en_US) for $150 USD.
