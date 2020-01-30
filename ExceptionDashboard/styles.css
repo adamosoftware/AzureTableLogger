@@ -1,0 +1,8 @@
+﻿a.show-exception:link, a.show-exception:visited {
+    text-decoration: none;
+    color: black
+}
+
+.exception-item.selected {
+    background-color: #ffd800
+}
