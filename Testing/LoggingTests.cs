@@ -39,6 +39,25 @@ namespace Testing
         }
 
         [TestMethod]
+        public void SimpleLogCreateRandomTable()
+        {
+            var rnd = new Random();
+            var logger = GetLogger(tableName: $"Tests{rnd.Next(100,1000)}");                        
+
+            try
+            {
+                throw new Exception("this is a sample exception");
+            }
+            catch (Exception exc)
+            {
+                logger.WriteAsync(exc).Wait();
+            }
+
+            var table = logger.GetTable();
+            table.Delete();
+        }
+
+        [TestMethod]
         public void SimpleLogWithData()
         {
             var logger = GetLogger();
