@@ -18,11 +18,13 @@
 
   <ItemGroup>
     <Compile Include="..\AzureTableLogger\ExceptionLogger.cs" Link="ExceptionLogger.cs" />
+    <Compile Include="..\AzureTableLogger\Models\ExceptionEntity.cs" Link="Models\ExceptionEntity.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
