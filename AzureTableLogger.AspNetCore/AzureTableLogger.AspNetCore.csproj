@@ -12,12 +12,15 @@
     <PackageProjectUrl>https://github.com/adamosoftware/AzureTableLogger</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamosoftware/AzureTableLogger</RepositoryUrl>
     <PackageTags>exception-handling error-handling netcore</PackageTags>
-    <Version>1.0.6</Version>
-    <PackageReleaseNotes>updated dependency on AzureTableLogger from 1.0.8 to 1.0.13</PackageReleaseNotes>
+    <Version>1.0.7</Version>
+    <PackageReleaseNotes>removed AzureTableLogger dependency and fixed an issue with cookies generating invalid property names</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AO.AzureTableLogger" Version="1.0.13" />
+    <Compile Include="..\AzureTableLogger\ExceptionLogger.cs" Link="ExceptionLogger.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AzureTableLogger.Models
 {
@@ -104,9 +105,10 @@ namespace AzureTableLogger.Models
         {
             if (dictionary != null)
             {
-                foreach (var keyPair in dictionary)
+                foreach (var keyPair in dictionary.Where(kp => !kp.Key.StartsWith(".AspNet")))
                 {
-                    entity.Add(prefix + keyPair.Key, new EntityProperty(keyPair.Value));
+                    string key = (prefix + keyPair.Key).Replace("-", "_");
+                    entity.Add(key, new EntityProperty(keyPair.Value));
                 }
             }
         }

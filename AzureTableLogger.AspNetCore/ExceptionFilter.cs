@@ -30,9 +30,16 @@ namespace AzureTableLogger
 
         public async Task OnExceptionAsync(ExceptionContext context)
         {
-            var customData = GetCustomData(context.HttpContext);
-            var result = await _logger.WriteAsync(context.Exception, context.HttpContext, customData);
-            context.Result = new RedirectResult(GetRedirectUrl(result.RowKey));            
+            try
+            {
+                var customData = GetCustomData(context.HttpContext);
+                var result = await _logger.WriteAsync(context.Exception, context.HttpContext, customData);
+                context.Result = new RedirectResult(GetRedirectUrl(result.RowKey));
+            }
+            catch (Exception exc)
+            {
+                throw new Exception($"Unable to log exception: {exc.Message}");
+            }
         }
 
         public async Task<IActionResult> TryCatchRedirectAsync(
